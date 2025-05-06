@@ -1,5 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Check, MessageCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
+import { useToast } from '@/hooks/use-toast';
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -7,8 +11,41 @@ interface ConfirmationModalProps {
 }
 
 export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModalProps) {
+  const [whatsappPhone, setWhatsappPhone] = useState<string>("");
+  const { toast } = useToast();
+  
+  // Buscar o número de WhatsApp da API
+  const { data: configData } = useQuery({
+    queryKey: ['/api/config'],
+    queryFn: async () => {
+      const response = await apiRequest('/api/config');
+      return response as { whatsappPhoneNumber: string };
+    },
+    enabled: isOpen // Só busca quando o modal estiver aberto
+  });
+
+  // Atualizar o número de WhatsApp quando os dados forem carregados
+  useEffect(() => {
+    if (configData && configData.whatsappPhoneNumber) {
+      setWhatsappPhone(configData.whatsappPhoneNumber);
+    }
+  }, [configData]);
+
   if (!isOpen) return null;
   
+  const handleWhatsAppClick = () => {
+    if (!whatsappPhone) {
+      toast({
+        title: 'Erro ao abrir WhatsApp',
+        description: 'Não foi possível obter o número de WhatsApp. Entre em contato com o suporte.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    
+    window.open(`https://wa.me/${whatsappPhone}`, '_blank');
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
       <div className="bg-white rounded-xl w-full max-w-md mx-4 md:mx-0 p-6 text-center">
@@ -32,11 +69,7 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
         <div className="flex flex-col space-y-3">
           <Button 
             className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white py-3 rounded-lg font-medium flex items-center justify-center"
-            onClick={() => {
-              // Abre o WhatsApp novamente se o usuário não tiver visto a primeira vez
-              const phoneNumber = import.meta.env.WHATSAPP_PHONE_NUMBER;
-              window.open(`https://wa.me/${phoneNumber}`, '_blank');
-            }}
+            onClick={handleWhatsAppClick}
           >
             <MessageCircle size={18} className="mr-2" />
             Abrir WhatsApp

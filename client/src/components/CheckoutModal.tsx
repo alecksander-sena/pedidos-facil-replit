@@ -48,14 +48,15 @@ export default function CheckoutModal({ isOpen, onClose, onConfirm }: CheckoutMo
   const { data: configData, isLoading: isConfigLoading } = useQuery({
     queryKey: ['/api/config'],
     queryFn: async () => {
-      return await apiRequest<{ whatsappPhoneNumber: string }>('/api/config');
+      const response = await apiRequest('/api/config');
+      return response as { whatsappPhoneNumber: string };
     },
     enabled: isOpen // Só busca quando o modal estiver aberto
   });
 
   // Atualizar o número de WhatsApp quando os dados forem carregados
   useEffect(() => {
-    if (configData?.whatsappPhoneNumber) {
+    if (configData && configData.whatsappPhoneNumber) {
       setWhatsappPhone(configData.whatsappPhoneNumber);
     }
   }, [configData]);
@@ -133,7 +134,19 @@ ${itemsList}
       const encodedMessage = encodeURIComponent(message);
       
       // Open WhatsApp with the message using the provided WhatsApp number
-      const phoneNumber = import.meta.env.WHATSAPP_PHONE_NUMBER;
+      // Usamos o número obtido da API ou um fallback em caso de erro
+      const phoneNumber = whatsappPhone;
+      if (!phoneNumber) {
+        console.error('Número de WhatsApp não encontrado');
+        toast({
+          title: 'Erro ao abrir WhatsApp',
+          description: 'Não foi possível obter o número de WhatsApp. Entre em contato com o suporte.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      
+      // Formatamos a URL do WhatsApp e abrimos em uma nova janela
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
       window.open(whatsappUrl, '_blank');
       
