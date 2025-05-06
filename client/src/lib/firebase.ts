@@ -1,6 +1,6 @@
 import { Product, Order } from "@/types";
 
-// Sample product data for development
+// Sample product data (usado quando não há conexão com Firebase)
 const sampleProducts: Product[] = [
   {
     id: "1",
@@ -84,20 +84,20 @@ const sampleProducts: Product[] = [
   }
 ];
 
-// Mock order IDs
+// Contador para simular IDs de pedidos
 let orderIdCounter = 1;
 
 // Function to fetch products
 export const fetchProducts = async (): Promise<Product[]> => {
-  // For demo purposes, we're returning sample products
-  console.log("Using sample products");
+  // Retornamos dados de amostra diretamente
+  console.log("Usando dados de amostra para produtos");
   return sampleProducts;
 };
 
 // Function to save order
 export const saveOrder = async (order: Omit<Order, "id" | "createdAt">): Promise<string> => {
-  // For demo purposes, we're just returning a mock order ID
+  // Simulamos salvar o pedido e geramos um ID
   const orderId = `order-${orderIdCounter++}`;
-  console.log(`Created order with ID: ${orderId}`, order);
+  console.log(`Simulando salvar pedido com ID: ${orderId}`, order);
   return orderId;
 };
