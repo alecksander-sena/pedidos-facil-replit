@@ -1,0 +1,53 @@
+Vamos adicionar os meus produtos e preços que são esses listados abaixo:
+HAMBÚRGUER 
+NOSSO PALADAR - (Pão brioche, Carne Artesanal, Queijo, Tomate, Cebola e Alface) - R$ 18,00
+FRANBACON - (Pão Brioche, Frango, Bacon, Queijo, Presunto, Tomate, Cebola e Alface) R$ 17,00
+SUCULENTO - (Pão Brioche, Carne Artesanal, Calabresa, Queijo, Tomate, Cebola e Alface) R$ 23,00
+NORDESTINO - (Pão Brioche, Carne Artesanal, Calabresa, Ovo, Tomate e Cebola) R$ 23,00
+BOM SABOR DA CASA - (Pão Brioche, 2 Carne Artesanal, Bacon, Calabresa, Queijo, Presunto, Tomate, Cebola e Alface) R$ 33,00
+XFRANGO - (Pão Brioche, Frango, Queijo, Presunto e Cebola) R$ 15,00
+OVO COM QUEIJO - (Pão Brioche, Carne Artesanal, Ovo, Queijo, Tomate e Alface) R$ 10,00
+
+BEBIDAS
+Refrigerante 1L - R$ 6,50
+Refrigerante Lata - R$ 4,50
+Refrigerante 250ml - R$ 2,50
+Tubaina - R$ 4,00
+Guarathon - R$ 2,00
+Golito - R$ 2,00
+Suco Com Água* - R$ 4,00
+Suco Com Leite* - R$ 6,00
+Água 500ml - R$ 2,00
+(*Polpa de Acerola, Laranja Com Acerola, Goiaba e Morango)
+
+SALGADOS
+ASSADOS (Queijo e Presunto, Calabresa e Frango) - R$ 3,00
+FRITOS (Frango e Salsicha) - R$ 2,00
+HAMBURGÃO (Carne de Hamburguer) - R$ 5,00
+
+CUSCUZ
+CARNE (Cuscuz, Carne em Cubos, Queijo e Vinagrete) R$ 15,00
+CALABRESA (Cuscuz, Calabresa em Cubos, Queijo e Vinagrete) R$ 15,00
+FRANGO (Cuscuz, Frango Desfiado, Queijo e Vinagrete) R$ 15,00
+BACON (Cuscuz, Bacon em Tiras, Queijo e Vinagrete) R$ 15,00
+OVO COM QUEIJO (Cuscuz, Ovo Frito Com Queijo e Vinagrete) - R$ 12,00
+
+TAPIOCA
+CARNE (Tapioca, Carne em Tiras e Queijo) - R$ 15,00
+CALABRESA (Tapioca, Calabresa em Cubos e Queijo) - R$  15,00
+FRANGO (Tapioca, Frango Desfiado e Queijo) - R$ 15,00
+BACON (Tapioca, Bacon em Tiras e Queijo) - R$ 15,00
+OVO COM QUEIJO (Tapioca, Ovo Frito Com Queijo) - R$ 12,00
+QUEIJO E PRESUNTO (Tapioca, Queijo e Presunto) - R$ 12,00
+
+ADICIONAIS*
+CARNE 5,00
+CALABRESA 3,00
+FRANGO 5,00
+BACON 4,00
+OVO 3,00
+QUEIJO E PRESUNTO 5,00
+(*Adicionais Para Cuscuz e Tapioca)
+
+
+Quero que adicione imagens para todos eles pode ser ilistrativas ou vinda de banco de dados, pode tbm criar categorias de produtos
