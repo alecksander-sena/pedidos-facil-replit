@@ -1,0 +1,92 @@
+Prompt para Replit (ou outro gerador de app web)
+Crie um app web simples, moderno e funcional com as seguintes características:
+
+Descrição:
+Um aplicativo web gratuito para clientes realizarem pedidos de forma rápida e fluida, sem necessidade de atendimento direto via WhatsApp.
+
+Como funciona:
+O cliente acessa o app e visualiza um catálogo de produtos.
+
+Ele escolhe os produtos e adiciona ao carrinho.
+
+Após finalizar, ele preenche:
+
+Nome completo
+
+Endereço de entrega
+
+Telefone
+
+Forma de pagamento (Pix, Dinheiro, Cartão na Entrega)
+
+Ao enviar o pedido:
+
+O sistema exibe uma tela de confirmação amigável.
+
+Os dados do pedido são enviados para o proprietário via link do WhatsApp, já com a mensagem formatada contendo:
+
+Nome do cliente
+
+Lista de produtos pedidos
+
+Endereço
+
+Valor total
+
+Forma de pagamento
+
+Telefone de contato
+
+Os pedidos também são salvos no Firebase Realtime Database ou Firestore para controle e histórico.
+
+Design:
+Interface gráfica moderna, clean, responsiva e com pequenos efeitos de transição e animações suaves para melhorar a experiência do usuário.
+
+Paleta de cores:
+Vermelho: #af1a2d
+
+Amarelo: #eea530
+
+Cinza: #737373
+
+Preto: #000000
+
+Branco: #ffffff
+
+Tecnologias:
+Todas de uso gratuito, sem custos:
+
+HTML
+
+CSS
+
+JavaScript puro ou usando frameworks gratuitos como Vue.js ou React
+
+Firebase (já possuo conta, só preciso que configure as chamadas no projeto)
+
+Integração com WhatsApp via link (ex: https://wa.me/5511999999999?text=mensagem_formatada)
+
+Entrega dos Pedidos:
+Tela de confirmação amigável para o cliente.
+
+Envio de mensagem via link do WhatsApp para o número do proprietário.
+
+Armazenamento do pedido no Firebase para histórico e controle.
+
+Layout:
+Cabeçalho com logo e nome da loja.
+
+Área de produtos com imagens, nome, descrição e preço.
+
+Carrinho lateral ou flutuante.
+
+Formulário de finalização.
+
+Rodapé com informações de contato.
+
+Extras:
+Efeitos de transição suaves nos botões, cards de produtos e telas de confirmação.
+
+Design adaptável para smartphones e desktops.
+
+Produtos carregados de forma dinâmica via JSON ou direto do Firebase (se possível).
