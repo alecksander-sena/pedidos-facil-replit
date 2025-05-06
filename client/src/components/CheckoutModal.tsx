@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCart } from '@/context/CartContext';
 import { saveOrder } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
+import { useQuery } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -40,6 +42,23 @@ export default function CheckoutModal({ isOpen, onClose, onConfirm }: CheckoutMo
   const { cart, subtotal, total, DELIVERY_FEE, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const [whatsappPhone, setWhatsappPhone] = useState<string>("");
+
+  // Buscar o número de WhatsApp da API
+  const { data: configData, isLoading: isConfigLoading } = useQuery({
+    queryKey: ['/api/config'],
+    queryFn: async () => {
+      return await apiRequest<{ whatsappPhoneNumber: string }>('/api/config');
+    },
+    enabled: isOpen // Só busca quando o modal estiver aberto
+  });
+
+  // Atualizar o número de WhatsApp quando os dados forem carregados
+  useEffect(() => {
+    if (configData?.whatsappPhoneNumber) {
+      setWhatsappPhone(configData.whatsappPhoneNumber);
+    }
+  }, [configData]);
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),

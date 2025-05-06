@@ -3,6 +3,7 @@ import { migrate } from "drizzle-orm/neon-serverless/migrator";
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import ws from 'ws';
 import * as schema from "../shared/schema";
+import { sql } from "drizzle-orm";
 
 // Configuração do PostgreSQL para funcionar na web
 neonConfig.webSocketConstructor = ws;
@@ -21,17 +22,20 @@ async function main() {
 
   // Realiza a migração (push do schema)
   try {
-    await db.insert(schema.products).values({
-      name: "Test Product",
-      description: "Test description",
-      price: 0,
-      image: "test.jpg",
-      category: "Test"
-    }).returning().then(async () => {
-      await db.delete(schema.products).where(1 == 1);
-    }).catch(() => {
-      // Tabela ainda não existe, o migrate vai criar
-    });
+    // Verifica se o schema já existe
+    const exists = await db.execute(sql`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND table_name = 'products'
+      );
+    `);
+
+    if (!exists.rows[0]?.exists) {
+      console.log("As tabelas ainda não existem, a migração irá criá-las.");
+    } else {
+      console.log("As tabelas já existem, verificando estrutura...");
+    }
 
     console.log("Banco de dados foi migrado com sucesso!");
   } catch (error) {

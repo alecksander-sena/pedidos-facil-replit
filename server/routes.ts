@@ -6,6 +6,18 @@ import { z } from "zod";
 import { ZodError } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // API endpoint to get WhatsApp phone number
+  app.get("/api/config", async (req, res) => {
+    try {
+      res.json({ 
+        whatsappPhoneNumber: process.env.WHATSAPP_PHONE_NUMBER || "" 
+      });
+    } catch (error) {
+      console.error("Error fetching config:", error);
+      res.status(500).json({ message: "Error fetching config" });
+    }
+  });
+
   // API endpoint to get all products
   app.get("/api/products", async (req, res) => {
     try {
