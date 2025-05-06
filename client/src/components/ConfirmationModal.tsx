@@ -1,9 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Check, MessageCircle } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { apiRequest } from '@/lib/queryClient';
-import { useToast } from '@/hooks/use-toast';
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -11,39 +7,14 @@ interface ConfirmationModalProps {
 }
 
 export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModalProps) {
-  const [whatsappPhone, setWhatsappPhone] = useState<string>("");
-  const { toast } = useToast();
-  
-  // Buscar o número de WhatsApp da API
-  const { data: configData } = useQuery({
-    queryKey: ['/api/config'],
-    queryFn: async () => {
-      const response = await apiRequest('/api/config');
-      return response as { whatsappPhoneNumber: string };
-    },
-    enabled: isOpen // Só busca quando o modal estiver aberto
-  });
-
-  // Atualizar o número de WhatsApp quando os dados forem carregados
-  useEffect(() => {
-    if (configData && configData.whatsappPhoneNumber) {
-      setWhatsappPhone(configData.whatsappPhoneNumber);
-    }
-  }, [configData]);
 
   if (!isOpen) return null;
   
   const handleWhatsAppClick = () => {
-    if (!whatsappPhone) {
-      toast({
-        title: 'Erro ao abrir WhatsApp',
-        description: 'Não foi possível obter o número de WhatsApp. Entre em contato com o suporte.',
-        variant: 'destructive',
-      });
-      return;
-    }
+    // Usar o número de WhatsApp brasileiro diretamente
+    const phoneNumber = "5574999414864"; // Seu número com prefixo do Brasil
     
-    window.open(`https://wa.me/${whatsappPhone}`, '_blank');
+    window.open(`https://wa.me/${phoneNumber}`, '_blank');
   };
 
   return (

@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCart } from '@/context/CartContext';
 import { saveOrder } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
-import { useQuery } from '@tanstack/react-query';
-import { apiRequest } from '@/lib/queryClient';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -42,24 +40,6 @@ export default function CheckoutModal({ isOpen, onClose, onConfirm }: CheckoutMo
   const { cart, subtotal, total, DELIVERY_FEE, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const [whatsappPhone, setWhatsappPhone] = useState<string>("");
-
-  // Buscar o número de WhatsApp da API
-  const { data: configData, isLoading: isConfigLoading } = useQuery({
-    queryKey: ['/api/config'],
-    queryFn: async () => {
-      const response = await apiRequest('/api/config');
-      return response as { whatsappPhoneNumber: string };
-    },
-    enabled: isOpen // Só busca quando o modal estiver aberto
-  });
-
-  // Atualizar o número de WhatsApp quando os dados forem carregados
-  useEffect(() => {
-    if (configData && configData.whatsappPhoneNumber) {
-      setWhatsappPhone(configData.whatsappPhoneNumber);
-    }
-  }, [configData]);
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
@@ -133,21 +113,12 @@ ${itemsList}
       const message = generateWhatsAppMessage(data);
       const encodedMessage = encodeURIComponent(message);
       
-      // Open WhatsApp with the message using the provided WhatsApp number
-      // Usamos o número obtido da API ou um fallback em caso de erro
-      const phoneNumber = whatsappPhone;
-      if (!phoneNumber) {
-        console.error('Número de WhatsApp não encontrado');
-        toast({
-          title: 'Erro ao abrir WhatsApp',
-          description: 'Não foi possível obter o número de WhatsApp. Entre em contato com o suporte.',
-          variant: 'destructive',
-        });
-        return;
-      }
+      // Usar o número de WhatsApp brasileiro diretamente (código do país + DDD + número)
+      const phoneNumber = "5574999414864"; // Seu número com prefixo do Brasil
       
       // Formatamos a URL do WhatsApp e abrimos em uma nova janela
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+      console.log('Abrindo WhatsApp URL:', whatsappUrl);
       window.open(whatsappUrl, '_blank');
       
       // Clear cart and reset form

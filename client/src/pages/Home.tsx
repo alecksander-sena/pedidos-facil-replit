@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import CategoryFilter from '@/components/CategoryFilter';
 import ProductGrid from '@/components/ProductGrid';
@@ -17,12 +16,28 @@ export default function Home() {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  // Fetch products
-  const { data: products = [], isLoading, error } = useQuery({
-    queryKey: ['products'],
-    queryFn: fetchProducts,
-  });
+  // Fetch products from Firebase
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        setIsLoading(true);
+        const productsData = await fetchProducts();
+        setProducts(productsData);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError(err instanceof Error ? err : new Error('Failed to fetch products'));
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    loadProducts();
+  }, []);
 
   // Filter products by category and search query
   const filteredProducts = products.filter((product: Product) => {
