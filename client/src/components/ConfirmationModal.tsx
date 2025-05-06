@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Check, MessageCircle } from 'lucide-react';
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -11,19 +12,44 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
       <div className="bg-white rounded-xl w-full max-w-md mx-4 md:mx-0 p-6 text-center">
-        <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center bg-green-100 rounded-full">
-          <i className="ri-check-line text-4xl text-green-500"></i>
+        <div className="relative">
+          <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center bg-green-100 rounded-full">
+            <Check className="h-10 w-10 text-green-500" strokeWidth={3} />
+          </div>
+          <div className="absolute -top-2 -right-2 bg-[#25D366] text-white rounded-full p-2 shadow-lg animate-bounce">
+            <MessageCircle size={20} />
+          </div>
         </div>
-        <h2 className="text-2xl font-poppins font-bold mb-2">Pedido Confirmado!</h2>
-        <p className="text-[#737373] mb-6">
-          Seu pedido foi enviado com sucesso. Em breve entraremos em contato para confirmar.
+        
+        <h2 className="text-2xl font-poppins font-bold mb-2">Pedido Enviado!</h2>
+        <p className="text-[#737373] mb-2">
+          Seu pedido foi enviado para o WhatsApp do restaurante.
         </p>
-        <Button 
-          className="w-full bg-[#af1a2d] hover:bg-[#9a1626] text-white py-3 rounded-lg font-medium"
-          onClick={onClose}
-        >
-          Voltar ao Menu
-        </Button>
+        <p className="text-[#737373] mb-6 text-sm">
+          Se a janela do WhatsApp não abriu automaticamente, verifique os bloqueadores de pop-up do seu navegador.
+        </p>
+        
+        <div className="flex flex-col space-y-3">
+          <Button 
+            className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white py-3 rounded-lg font-medium flex items-center justify-center"
+            onClick={() => {
+              // Abre o WhatsApp novamente se o usuário não tiver visto a primeira vez
+              const phoneNumber = import.meta.env.WHATSAPP_PHONE_NUMBER;
+              window.open(`https://wa.me/${phoneNumber}`, '_blank');
+            }}
+          >
+            <MessageCircle size={18} className="mr-2" />
+            Abrir WhatsApp
+          </Button>
+          
+          <Button 
+            variant="outline"
+            className="w-full py-3 rounded-lg font-medium border-gray-300"
+            onClick={onClose}
+          >
+            Voltar ao Menu
+          </Button>
+        </div>
       </div>
     </div>
   );

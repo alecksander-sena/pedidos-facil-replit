@@ -113,9 +113,8 @@ ${itemsList}
       const message = generateWhatsAppMessage(data);
       const encodedMessage = encodeURIComponent(message);
       
-      // Open WhatsApp with the message
-      // Default phone number or get from environment variable
-      const phoneNumber = import.meta.env.VITE_WHATSAPP_PHONE || "5511999999999";
+      // Open WhatsApp with the message using the provided WhatsApp number
+      const phoneNumber = import.meta.env.WHATSAPP_PHONE_NUMBER;
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
       window.open(whatsappUrl, '_blank');
       
