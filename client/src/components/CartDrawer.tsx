@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { formatCurrency } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { X, ArrowLeft, Plus, Minus, ShoppingCart } from 'lucide-react';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -41,12 +42,21 @@ export default function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerPr
       <div className="flex flex-col h-full">
         <div className="p-4 border-b">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-poppins font-semibold">Seu Pedido</h2>
             <button 
-              className="p-2"
+              className="p-2 flex items-center text-gray-600 hover:text-gray-900"
               onClick={onClose}
+              aria-label="Voltar"
             >
-              <i className="ri-close-line text-xl"></i>
+              <ArrowLeft size={20} className="mr-1" />
+              <span className="text-sm">Voltar</span>
+            </button>
+            <h2 className="text-xl font-poppins font-semibold absolute left-1/2 transform -translate-x-1/2">Seu Pedido</h2>
+            <button 
+              className="p-2 text-gray-600 hover:text-gray-900"
+              onClick={onClose}
+              aria-label="Fechar"
+            >
+              <X size={20} />
             </button>
           </div>
         </div>
@@ -55,9 +65,15 @@ export default function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerPr
           {/* Cart is empty state */}
           {totalItems === 0 ? (
             <div className="flex flex-col items-center justify-center h-full">
-              <i className="ri-shopping-cart-line text-5xl text-gray-300 mb-4"></i>
+              <ShoppingCart size={48} className="text-gray-300 mb-4" />
               <p className="text-[#737373] text-center">Seu carrinho está vazio</p>
               <p className="text-[#737373] text-center text-sm mt-2">Adicione itens do nosso cardápio</p>
+              <Button
+                className="mt-6 bg-[#af1a2d] hover:bg-[#9a1626] text-white"
+                onClick={onClose}
+              >
+                Voltar para o Cardápio
+              </Button>
             </div>
           ) : (
             <div className="space-y-4">
@@ -72,6 +88,10 @@ export default function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerPr
                         src={item.image} 
                         alt={item.name} 
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://via.placeholder.com/150?text=Imagem+indisponível';
+                        }}
                       />
                     </div>
                     <div>
@@ -83,17 +103,19 @@ export default function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerPr
                   </div>
                   <div className="flex items-center space-x-2">
                     <button 
-                      className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
+                      className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300"
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      aria-label="Diminuir quantidade"
                     >
-                      <i className="ri-subtract-line"></i>
+                      <Minus size={16} />
                     </button>
                     <span className="w-5 text-center">{item.quantity}</span>
                     <button 
-                      className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
+                      className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300"
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      aria-label="Aumentar quantidade"
                     >
-                      <i className="ri-add-line"></i>
+                      <Plus size={16} />
                     </button>
                   </div>
                 </div>
@@ -117,13 +139,22 @@ export default function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerPr
               <span className="text-[#af1a2d]">{formatCurrency(total)}</span>
             </div>
           </div>
-          <Button
-            className="w-full bg-[#af1a2d] hover:bg-[#9a1626] text-white py-3 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={onCheckout}
-            disabled={totalItems === 0}
-          >
-            Finalizar Pedido
-          </Button>
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              variant="outline"
+              className="py-3 rounded-lg font-medium"
+              onClick={onClose}
+            >
+              Continuar Comprando
+            </Button>
+            <Button
+              className="bg-[#af1a2d] hover:bg-[#9a1626] text-white py-3 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={onCheckout}
+              disabled={totalItems === 0}
+            >
+              Finalizar Pedido
+            </Button>
+          </div>
         </div>
       </div>
     </div>
