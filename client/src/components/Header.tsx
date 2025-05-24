@@ -24,7 +24,7 @@ export default function Header({ establishmentName, isAdmin, onLoginClick }: Pro
           Editar
         </button>
       ) : (
-        <div className="w-16" />  {/* espaçamento para balancear */}
+        <div className="w-16" />  
       )}
     </header>
   );
