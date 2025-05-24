@@ -1,31 +1,15 @@
 import React from "react";
-import logo from "@/assets/icon-512.png";
+import logo from "@/assets/logo.png";
 
-type Props = {
-  establishmentName: string;
-  isAdmin: boolean;
-  onLoginClick?: () => void;
-};
+interface HeaderProps {
+  storeName: string;
+}
 
-export default function Header({ establishmentName, isAdmin, onLoginClick }: Props) {
+export default function Header({ storeName }: HeaderProps) {
   return (
-    <header className="fixed top-0 left-0 w-full z-20 bg-white shadow flex items-center justify-between px-4 py-2">
-      <div className="flex items-center gap-2">
-        <img src={logo} alt="Logo" className="w-10 h-10 rounded-full border border-primary shadow" />
-      </div>
-      <div className="flex-1 text-center font-bold text-xl text-primary tracking-wide select-none">
-        {establishmentName}
-      </div>
-      {isAdmin ? (
-        <button
-          className="rounded-full bg-primary text-white px-3 py-1 font-semibold hover:bg-primary/90 transition"
-          onClick={onLoginClick}
-        >
-          Editar
-        </button>
-      ) : (
-        <div className="w-16" />  
-      )}
+    <header className="w-full bg-white shadow py-3 px-4 flex items-center justify-center fixed top-0 left-0 z-10">
+      <img src={logo} alt="Logo" className="h-8 mr-2" />
+      <span className="font-bold text-xl text-primary">{storeName}</span>
     </header>
   );
 }

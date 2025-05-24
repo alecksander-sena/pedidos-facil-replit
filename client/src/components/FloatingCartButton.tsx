@@ -1,25 +1,27 @@
 import React from "react";
-import { ShoppingCart } from "lucide-react";
-import { Link } from "wouter";
+import { Home, ShoppingCart, User } from "lucide-react";
 
 type Props = {
-  itemCount: number;
+  isOwner?: boolean;
 };
 
-export default function FloatingCartButton({ itemCount }: Props) {
+export default function BottomNav({ isOwner = false }: Props) {
   return (
-    <Link href="/cart">
-      <button
-        className="fixed z-40 bottom-20 right-5 bg-primary text-white rounded-full shadow-lg p-4 flex items-center justify-center animate-pop hover:bg-primary/90 transition-all"
-        style={{ boxShadow: "0 4px 24px 0 rgba(0,0,0,0.09)" }}
-      >
-        <ShoppingCart size={28} />
-        {itemCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
-            {itemCount}
-          </span>
-        )}
+    <nav className="fixed bottom-0 left-0 w-full bg-white shadow-lg flex justify-around items-center py-2 z-20">
+      <button className="flex flex-col items-center text-primary">
+        <Home size={24} />
+        <span className="text-xs">Início</span>
       </button>
-    </Link>
+      <button className="flex flex-col items-center text-primary">
+        <ShoppingCart size={24} />
+        <span className="text-xs">Carrinho</span>
+      </button>
+      {isOwner && (
+        <button className="flex flex-col items-center text-primary">
+          <User size={24} />
+          <span className="text-xs">Perfil</span>
+        </button>
+      )}
+    </nav>
   );
 }

@@ -2,20 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
 :root {
-  --background: 45 100% 96%;
-  --foreground: 0 0% 10%;
-  --primary: 0 81% 45%;       /* vermelho */
+  --background: 36 100% 97%;      /* bege */
+  --foreground: 0 0% 10%;         /* quase preto */
+  --primary: 0 80% 39%;           /* vermelho */
   --primary-foreground: 0 0% 98%;
-  --secondary: 39 100% 60%;   /* amarelo */
+  --secondary: 36 76% 56%;        /* amarelo */
   --secondary-foreground: 0 0% 98%;
-  --radius: 0.75rem;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 10%;
+  --accent: 0 0% 45%;             /* cinza */
+  --radius: 0.75rem;              /* borda arredondada */
 }
 
 body {
-  font-family: 'Poppins', 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif;
   background: hsl(var(--background));
   color: hsl(var(--foreground));
 }

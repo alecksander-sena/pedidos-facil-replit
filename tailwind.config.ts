@@ -24,26 +24,16 @@ module.exports = {
           foreground: "hsl(var(--accent-foreground))",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "hsl(var(--background))",
+          foreground: "hsl(var(--foreground))",
         },
       },
       borderRadius: {
         lg: "var(--radius)",
       },
       fontFamily: {
-        sans: ["Poppins", "Inter", "sans-serif"],
+        sans: ["Inter", "sans-serif"],
       },
-      keyframes: {
-        pop: {
-          '0%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.07)' },
-          '100%': { transform: 'scale(1)' },
-        },
-      },
-      animation: {
-        pop: 'pop 0.2s ease-in-out',
-      }
     },
   },
   plugins: [],
