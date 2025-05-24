@@ -1,19 +1,37 @@
 import React from "react";
-import Header from "@/components/Header";
-import BottomNav from "@/components/BottomNav";
+import { useCart } from "@/context/CartContext";
 
 export default function Cart() {
-  const isAdmin = false;
-  const establishmentName = "Lanchonete Exemplo";
-  // Adapte para buscar itens do carrinho
+  const { items, removeFromCart, clearCart } = useCart();
+
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
-      <Header establishmentName={establishmentName} isAdmin={isAdmin} />
-      <main className="pt-16 px-4 max-w-md mx-auto">
-        <h2 className="text-xl font-bold my-4">Seu carrinho</h2>
-        <div className="text-gray-500 mt-8">Seu carrinho está vazio.</div>
-      </main>
-      <BottomNav isAdmin={isAdmin} />
+    <div className="pt-16 pb-24 px-4 max-w-md mx-auto">
+      <h2 className="text-xl font-bold mb-4">Seu Carrinho</h2>
+      {items.length === 0 ? (
+        <p>O carrinho está vazio.</p>
+      ) : (
+        <ul className="space-y-2">
+          {items.map((item) => (
+            <li key={item.name} className="bg-white rounded-lg p-3 flex justify-between items-center shadow">
+              <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
+              <div>
+                <div className="font-semibold">{item.name}</div>
+                <div className="text-xs text-gray-500">{item.category}</div>
+                <div className="text-primary">{item.price}</div>
+                <div className="text-xs">Qtd: {item.quantity}</div>
+              </div>
+              <button className="text-red-500" onClick={() => removeFromCart(item.name)}>
+                Remover
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {items.length > 0 && (
+        <button className="mt-4 w-full bg-secondary text-white py-2 rounded" onClick={clearCart}>
+          Limpar Carrinho
+        </button>
+      )}
     </div>
   );
 }
