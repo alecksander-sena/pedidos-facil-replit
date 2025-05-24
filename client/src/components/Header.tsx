@@ -1,30 +1,31 @@
-import { useCart } from '@/context/CartContext';
+import React from "react";
+import logo from "@/assets/icon-512.png";
 
-interface HeaderProps {
-  openCart: () => void;
-}
+type Props = {
+  establishmentName: string;
+  isAdmin: boolean;
+  onLoginClick?: () => void;
+};
 
-export default function Header({ openCart }: HeaderProps) {
-  const { totalItems } = useCart();
-  
+export default function Header({ establishmentName, isAdmin, onLoginClick }: Props) {
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="w-10 h-10 bg-[#af1a2d] rounded-full flex items-center justify-center mr-2">
-            <span className="text-white text-xl font-bold">P</span>
-          </div>
-          <h1 className="font-poppins font-bold text-xl text-black">PedidosFácil</h1>
-        </div>
-        <div className="flex items-center space-x-4">
-          <button id="cartButton" className="relative p-2" onClick={openCart}>
-            <i className="ri-shopping-cart-2-line text-2xl"></i>
-            <span className="absolute -top-1 -right-1 bg-[#af1a2d] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              {totalItems}
-            </span>
-          </button>
-        </div>
+    <header className="fixed top-0 left-0 w-full z-20 bg-white shadow flex items-center justify-between px-4 py-2">
+      <div className="flex items-center gap-2">
+        <img src={logo} alt="Logo" className="w-10 h-10 rounded-full border border-primary shadow" />
       </div>
+      <div className="flex-1 text-center font-bold text-xl text-primary tracking-wide select-none">
+        {establishmentName}
+      </div>
+      {isAdmin ? (
+        <button
+          className="rounded-full bg-primary text-white px-3 py-1 font-semibold hover:bg-primary/90 transition"
+          onClick={onLoginClick}
+        >
+          Editar
+        </button>
+      ) : (
+        <div className="w-16" />  {/* espaçamento para balancear */}
+      )}
     </header>
   );
 }

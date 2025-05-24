@@ -19,21 +19,9 @@ module.exports = {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
         },
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -44,8 +32,18 @@ module.exports = {
         lg: "var(--radius)",
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["Poppins", "Inter", "sans-serif"],
       },
+      keyframes: {
+        pop: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.07)' },
+          '100%': { transform: 'scale(1)' },
+        },
+      },
+      animation: {
+        pop: 'pop 0.2s ease-in-out',
+      }
     },
   },
   plugins: [],

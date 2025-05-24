@@ -1,26 +1,25 @@
-import { useCart } from '@/context/CartContext';
-import { ShoppingCart } from 'lucide-react';
+import React from "react";
+import { ShoppingCart } from "lucide-react";
+import { Link } from "wouter";
 
-interface FloatingCartButtonProps {
-  onClick: () => void;
-}
+type Props = {
+  itemCount: number;
+};
 
-export default function FloatingCartButton({ onClick }: FloatingCartButtonProps) {
-  const { totalItems } = useCart();
-  
+export default function FloatingCartButton({ itemCount }: Props) {
   return (
-    <div 
-      className="fixed bottom-6 right-6 bg-[#af1a2d] text-white rounded-full shadow-lg p-4 md:hidden z-30 cursor-pointer hover:bg-red-800 transition-colors"
-      onClick={onClick}
-    >
-      <div className="relative">
-        <ShoppingCart size={22} />
-        <span 
-          className="absolute -top-2 -right-2 bg-[#eea530] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold"
-        >
-          {totalItems}
-        </span>
-      </div>
-    </div>
+    <Link href="/cart">
+      <button
+        className="fixed z-40 bottom-20 right-5 bg-primary text-white rounded-full shadow-lg p-4 flex items-center justify-center animate-pop hover:bg-primary/90 transition-all"
+        style={{ boxShadow: "0 4px 24px 0 rgba(0,0,0,0.09)" }}
+      >
+        <ShoppingCart size={28} />
+        {itemCount > 0 && (
+          <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
+            {itemCount}
+          </span>
+        )}
+      </button>
+    </Link>
   );
 }
